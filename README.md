@@ -8,6 +8,7 @@ It just uses OpenCV and Numpy. The OpenCV version is 3.4.2 and python version is
 
 ## usage
 for the main program - python ar.py
+
 for camera calibration alter the path mentioned in the file and run - python camera_calib.py 
 
 ## explanation
