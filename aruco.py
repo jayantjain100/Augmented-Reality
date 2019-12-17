@@ -20,6 +20,7 @@ def scale(image, f):
 def get_bit_sig(image, contour_pts, thresh = 127):
     ans = []
 
+    #getting all the 4 corners of the quad
     a, b = contour_pts[0][0]
     c, d = contour_pts[1][0]
     e, f = contour_pts[3][0]
@@ -28,9 +29,10 @@ def get_bit_sig(image, contour_pts, thresh = 127):
     for i in range(8):
         for j in range(8):
             #using bilinear interpolation to find the coordinate using fractional contributions of the corner 4 points
-            f1 = float(i)/8 + 1./16
-            f2 = float(j)/8 + 1./16
+            f1 = float(i)/8 + 1./16 #fraction1
+            f2 = float(j)/8 + 1./16 #fraction2
 
+            #finding the intermediate coordinates 
             upper_x = (1-f1)*a + f1*(c)
             lower_x = (1-f1)*e + f1*(g)
             upper_y = (1-f1)*b + f1*d
@@ -39,7 +41,7 @@ def get_bit_sig(image, contour_pts, thresh = 127):
             x = int( (1-f2)*upper_x + (f2)*lower_x )
             y = int( (1-f2)*upper_y + (f2)*lower_y )
 
-            # if patch_avg(image, y, x) >= 127:
+            #thresholding
             if image[y][x] >= 127:
                 ans.append(1)
             else:
@@ -54,12 +56,14 @@ def match_sig(sig1, sig2, thresh = 62):
         return False
 
 def find_pattern_aruco(image, aruco_marker, sigs):
-    #image is supposed to be the unflipped frame
+    #converting image to black and white
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)   
-    threshold = cv2.adaptiveThreshold(gray, 255,cv2.ADAPTIVE_THRESH_MEAN_C, cv2.THRESH_BINARY,11,10)
+    
+    #adaptive thresholding for robustness against varying lighting
+    thresholded = cv2.adaptiveThreshold(gray, 255,cv2.ADAPTIVE_THRESH_MEAN_C, cv2.THRESH_BINARY,11,10)
     h, w = aruco_marker.shape
-    _, contours ,_= cv2.findContours(threshold, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE) 
-    found = False
+
+    _, contours ,_= cv2.findContours(thresholded, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE) 
     for cnt in contours : 
         approx = cv2.approxPolyDP(cnt, 0.01 * cv2.arcLength(cnt, True), True) 
         if approx.shape[0]==4:
@@ -69,6 +73,7 @@ def find_pattern_aruco(image, aruco_marker, sigs):
             y2 = approx[1][0][1]
 
             norm = (x1 - x2)**2 + (y1 - y2)**2
+            #constraint on minimum edge size of quad
             if norm > 100:
                 temp_sig = get_bit_sig(gray, approx)
                 match1 = match_sig(sigs[0], temp_sig)
@@ -78,7 +83,6 @@ def find_pattern_aruco(image, aruco_marker, sigs):
 
                 if (match1 or match2 or match3 or match4):
                     dst_pts = approx
-                    found = True
                     if match1:
                         src_pts = np.array([[0,0],[0,w], [h,w], [h,0]])
                     if match2:
@@ -92,6 +96,7 @@ def find_pattern_aruco(image, aruco_marker, sigs):
 
                     return src_pts, dst_pts, True
 
+    #reaching here implies nothing was found
     return None, None, False              
 
    

@@ -6,6 +6,8 @@ import numpy as np
 
 def augment(img, obj, projection, template, color=False, scale = 4):
     # takes the captureed image, object to augment, and transformation matrix  
+    #adjust scale to make the object smaller or bigger, 4 works for the fox
+
     h, w = template.shape
     vertices = obj.vertices
     img = np.ascontiguousarray(img, dtype=np.uint8)
@@ -17,14 +19,12 @@ def augment(img, obj, projection, template, color=False, scale = 4):
 
     #projecting the faces to pixel coords and then drawing
     for face in obj.faces:
+        #a face is a list [face_vertices, face_tex_coords, face_col]
         face_vertices = face[0]
-        points = np.array([vertices[vertex - 1] for vertex in face_vertices])
+        points = np.array([vertices[vertex - 1] for vertex in face_vertices]) #-1 because of the shifted numbering
         points = scale*points
         points = np.array([[p[2] + w/2, p[0] + h/2, p[1]] for p in points]) #shifted to centre 
-        #why wasnt 0, 1, 2 working?
-
-        # points = np.array([[p[0] + w / 2, p[1] + h / 2, p[2]] for p in points])
-        dst = cv2.perspectiveTransform(points.reshape(-1, 1, 3), projection)
+        dst = cv2.perspectiveTransform(points.reshape(-1, 1, 3), projection)#transforming to pixel coords
         imgpts = np.int32(dst)
         if color is False:
             cv2.fillConvexPoly(img, imgpts, (50, 50, 50))

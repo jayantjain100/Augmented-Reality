@@ -58,13 +58,7 @@ def main():
 	h_canvas = max(h, h2)
 	w_canvas = w + w2
 
-	# video = cv2.VideoWriter('blog_media/video.avi',-1,1,(w_canvas,h_canvas))
-	canvas = np.zeros((h_canvas, w_canvas, 3), np.uint8)
-	frame_lis = []
-
 	while rval:
-		# frame_lis.append(canvas)
-		# video.write(canvas)
 		rval, frame = vc.read() #fetch frame from webcam
 		key = cv2.waitKey(20) 
 		if key == 27:
@@ -79,7 +73,6 @@ def main():
 			# print('homograpy est failed')
 			canvas[:h2 , w: , :] = np.flip(frame, axis = 1)
 			cv2.imshow("webcam", canvas )
-			# cv2.imwrite('blog_media/detection.png', canvas)
 			continue
 
 		R_T = get_extended_RT(A, H)
