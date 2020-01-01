@@ -12,4 +12,6 @@ for the main program - python ar.py
 for camera calibration alter the path mentioned in the file and run - python camera_calib.py 
 
 ## explanation
-For an in-depth explanation, check out my blog at _
+For an in-depth explanation, check out my blog at https://medium.com/swlh/augmented-reality-diy-3fc138274561
+
+
