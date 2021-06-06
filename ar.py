@@ -34,8 +34,12 @@ def get_extended_RT(A, H):
 	R_T[:, 3] = T
 	return R_T
 
-def main():
-	marker_colored = cv2.imread('data/m1_flip_new.png')
+if __name__ == '__main__':
+	marker_colored = cv2.imread('data/m1.png')
+	assert marker_colored is not None, "Could not find the aruco marker image file"
+	#accounts for lateral inversion caused by the webcam
+	marker_colored = cv2.flip(marker_colored, 1)
+
 	marker_colored =  cv2.resize(marker_colored, (480,480), interpolation = cv2.INTER_CUBIC )
 	marker = cv2.cvtColor(marker_colored, cv2.COLOR_BGR2GRAY)
 
@@ -83,5 +87,3 @@ def main():
 		cv2.imshow("webcam", canvas)
 
 
-if __name__ == '__main__':
-	main()
