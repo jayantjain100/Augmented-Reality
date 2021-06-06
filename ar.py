@@ -46,7 +46,8 @@ if __name__ == '__main__':
 
 	cv2.namedWindow("webcam")
 	vc = cv2.VideoCapture(0)
-
+	assert vc.isOpened(), "couldn't access the webcam"
+	
 	h,w = marker.shape
 	#considering all 4 rotations
 	marker_sig1 = aruco.get_bit_sig(marker, np.array([[0,0],[0,w], [h,w], [h,0]]).reshape(4,1,2))
