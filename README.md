@@ -2,6 +2,13 @@
 
 "ar.py" is a python program that uses OpenCV to render .obj files on Aruco markers. For an in-depth explanation, check out my [blog tutorial](https://medium.com/swlh/augmented-reality-diy-3fc138274561).
 
+<!-- ![Demo](https://user-images.githubusercontent.com/31953115/121981314-0b712c00-cdab-11eb-98d4-decf737824ea.gif) -->
+
+<p align = "center">
+  <img src="https://user-images.githubusercontent.com/31953115/121981314-0b712c00-cdab-11eb-98d4-decf737824ea.gif" alt="animated" />
+</p>
+
+
 ## Dependencies
 
 It uses OpenCV(3.4.2) and Numpy(1.17.2). The python version is 3.7.5
