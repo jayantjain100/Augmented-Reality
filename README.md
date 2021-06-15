@@ -1,6 +1,6 @@
 # Augmented Reality
 
-"ar.py" is a python program that uses OpenCV to render .obj files on Aruco markers. 
+"ar.py" is a python program that uses OpenCV to render .obj files on Aruco markers. For an in-depth explanation, check out my [blog tutorial](https://medium.com/swlh/augmented-reality-diy-3fc138274561).
 
 ## Dependencies
 
@@ -26,15 +26,16 @@ python ar.py
 ```
 It is recommended to print the aruco marker(data/m1.pdf) on a piece of paper. Alternatively, the program should work (but inferiorly) with the marker open on your phone. The white margin around the marker boundary is required for boundary detection. Keeping the marker flat (for example, by sticking it to a piece of cardboard) further helps in detecting the marker. 
 
+For a faster version which uses the Lucas-Kanade method for tracking - 
+```bash
+python ar_with_tracking.py
+```
 
-For camera calibration alter the path mentioned in the file and run - 
+(Optional) For camera calibration alter the path mentioned in the file and run - 
 
 ```bash
 python camera_calib.py 
 ```
 
-
-## Explanation
-For an in-depth explanation, check out my blog at https://medium.com/swlh/augmented-reality-diy-3fc138274561
-
+Refer to the blog for all the details about camera calibration. 
 

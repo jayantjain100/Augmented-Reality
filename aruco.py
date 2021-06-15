@@ -92,7 +92,8 @@ def find_pattern_aruco(image, aruco_marker, sigs):
                     if match4:
                         src_pts = np.array([[h,0],[0,0], [0,w], [h,w]])
 
-                    cv2.drawContours(image, [approx], 0, (0, 0, 255), 2) #mark red outline for found marker 
+                    # removed for consistency across both programs - with and without tracking
+                    # cv2.drawContours(image, [approx], 0, (0, 0, 255), 2) #mark red outline for found marker 
 
                     return src_pts, dst_pts, True
 
