@@ -83,7 +83,7 @@ if __name__ == '__main__':
 			combined_homography = (H_mid).dot(H_from_aruco)
 			R_T = get_extended_RT(np.float64(A), np.float64(combined_homography))
 			transformation = np.float64(A).dot(R_T)
-			augmented = np.flip(augment(frame, obj, transformation, marker, True), axis = 1)
+			augmented = np.flip(augment(frame, obj, transformation, marker), axis = 1)
 			canvas[:h2 , w: , :] = augmented
 
 		cv2.imshow("webcam", canvas)

@@ -59,7 +59,7 @@ if __name__ == '__main__':
 		R_T = get_extended_RT(A, H)
 		transformation = A.dot(R_T) 
 		
-		augmented = np.flip(augment(frame, obj, transformation, marker, True), axis = 1) #flipped for better control
+		augmented = np.flip(augment(frame, obj, transformation, marker), axis = 1) #flipped for better control
 		canvas[:h2 , w: , :] = augmented
 		cv2.imshow("webcam", canvas)
 

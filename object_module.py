@@ -1,10 +1,35 @@
+# some functions for creation and rendering of 3d objects were borrowed/inspired from 
+# Juan Gallostra Acín's repository - https://github.com/juangallostra/augmented-reality 
+
+'''
+Copyright (c) 2018 Juan Gallostra Acín
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+'''
+
 #contains code to the .obj file and augment the object
 
 import cv2
 import numpy as np
 
 
-def augment(img, obj, projection, template, color=False, scale = 4):
+def augment(img, obj, projection, template, scale = 4):
     # takes the captureed image, object to augment, and transformation matrix  
     #adjust scale to make the object smaller or bigger, 4 works for the fox
 
@@ -26,11 +51,8 @@ def augment(img, obj, projection, template, color=False, scale = 4):
         points = np.array([[p[2] + w/2, p[0] + h/2, p[1]] for p in points]) #shifted to centre 
         dst = cv2.perspectiveTransform(points.reshape(-1, 1, 3), projection)#transforming to pixel coords
         imgpts = np.int32(dst)
-        if color is False:
-            cv2.fillConvexPoly(img, imgpts, (50, 50, 50))
-        else:
-            cv2.fillConvexPoly(img, imgpts, face[-1])
-            
+        cv2.fillConvexPoly(img, imgpts, face[-1])
+        
     return img
 
 class three_d_object:
