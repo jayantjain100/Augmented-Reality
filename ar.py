@@ -4,7 +4,7 @@ import numpy as np
 import math
 from object_module import *
 import sys
-import aruco 
+import aruco_module as aruco 
 from my_constants import *
 from utils import get_extended_RT
 

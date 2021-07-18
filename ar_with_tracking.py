@@ -5,7 +5,7 @@ import numpy as np
 import math
 from object_module import *
 import sys
-import aruco 
+import aruco_module as aruco 
 from my_constants import *
 from utils import get_extended_RT
 
@@ -54,7 +54,7 @@ if __name__ == '__main__':
 	H_from_aruco = None #the initial homography, the partial homography obtained from tracking is combined witht this to get the full homography
 	counter = 0
 	started_once = False
-	lost_tracking = True #initially means that we havent started and thats why w
+	lost_tracking = True #initially means that we havent started
 	all_tracking_pts = fixed_gp.shape[0]
 	TRACKING_QUALITY_THRESHOLD = max(4, int(0.01 * TRACKING_QUALITY_THRESHOLD_PERCENTAGE * all_tracking_pts))
 	print(f"good pts in the marker are {all_tracking_pts}")
