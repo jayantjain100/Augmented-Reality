@@ -63,7 +63,7 @@ def find_pattern_aruco(image, aruco_marker, sigs):
     thresholded = cv2.adaptiveThreshold(gray, 255,cv2.ADAPTIVE_THRESH_MEAN_C, cv2.THRESH_BINARY,11,10)
     h, w = aruco_marker.shape
 
-    _, contours ,_= cv2.findContours(thresholded, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE) 
+    contours ,_= cv2.findContours(thresholded, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE) 
     for cnt in contours : 
         approx = cv2.approxPolyDP(cnt, 0.01 * cv2.arcLength(cnt, True), True) 
         if approx.shape[0]==4:
